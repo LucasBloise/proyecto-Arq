@@ -92,7 +92,7 @@ public abstract class RutinasController {
       }
 
       // Cargar procesos
-      if (hayProcesoEn(Estado.NUEVO) && getPrimerProcesoEn(Estado.NUEVO).getTiempoDeLlegada() <= Tiempo.tiempo) {
+      if (hayProcesoEn(Estado.NUEVO) && getPrimerProcesoEn(Estado.NUEVO).getTiempoIngreso() <= Tiempo.tiempo) {
         GraficoController.grafico[5][Tiempo.tiempo] = "1P" + getPrimerProcesoEn(Estado.NUEVO).getNombreProceso();
         getPrimerProcesoEn(Estado.NUEVO).setEstado(Estado.LISTO);
         continue;
