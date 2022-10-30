@@ -1,7 +1,5 @@
 package com.mycompany.proyecto.arq.Controllers;
 
-import javax.swing.*;
-
 import com.mycompany.proyecto.arq.Data.Tiempo;
 
 public class GraficoController {
