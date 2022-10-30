@@ -17,12 +17,8 @@ public class ProyectoArq {
 
 /**
  *TODO:
- 1- Desbloquear Proceso
- 2- Terminar procesos
- 3- Elegir el proceso mas corto para ejecutar
- 4- Solucionar ingreso de procesos nuevos
- 5- Desalojo
- 6- Tabla excel opcional
+ 3- Tabla excel opcional
+ 2- Fix bug de opcion 7,6,3
  *
  */
 

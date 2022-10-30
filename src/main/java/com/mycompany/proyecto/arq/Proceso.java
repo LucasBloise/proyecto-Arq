@@ -16,18 +16,19 @@ public class Proceso {
 
     private static int cantidadDeProcesos = 0;
     private int cantidadRafagas;
-    private int tiempoIngreso;
+    private int tiempoDeLlegada;
     private int nombreProceso;
     private int tiempoRequerido = 0;
     private int tiempoEmpleado = 0;
     private int tiempoBloqueado = 0;
+    private int momentoDeFinalizacion;
     public ArrayList<Integer> ciclosParaEjecutar = new ArrayList<Integer>();
     private Estado estado = Estado.NUEVO;
 
-    public Proceso(int cantidadRafagas, int tiempoIngreso, int nombreProceso, int tiempoRequerido, int tiempoEmpleado,
+    public Proceso(int cantidadRafagas, int tiempoDeLlegada, int nombreProceso, int tiempoRequerido, int tiempoEmpleado,
             int tiempoBloqueado, ArrayList<Integer> ciclosParaEjecutar, Estado estado) {
         this.cantidadRafagas = cantidadRafagas;
-        this.tiempoIngreso = tiempoIngreso;
+        this.tiempoDeLlegada = tiempoDeLlegada;
         this.nombreProceso = nombreProceso;
         this.tiempoRequerido = tiempoRequerido;
         this.tiempoEmpleado = tiempoEmpleado;
@@ -35,8 +36,12 @@ public class Proceso {
         this.ciclosParaEjecutar = ciclosParaEjecutar;
     }
 
+    public boolean haEntrado(int tiempo) {
+        return this.tiempoDeLlegada <= tiempo;
+    }
+
     public boolean deboDesbloquear() {
-        return this.tiempoBloqueado >= 3; //Tiempo E/S por defecto
+        return this.tiempoBloqueado >= InfoGlobal.getTiempoEntradaSalida();
     }
 
     public void incrementarTiempoBloqueado() {
@@ -52,35 +57,72 @@ public class Proceso {
     }
 
     public boolean deboTerminar() {
-        return this.ciclosParaEjecutar.size() == 0 ;
+        return this.ciclosParaEjecutar.size() == 0;
     }
 
     public void reducirRafagaProcesamiento() {
-        this.ciclosParaEjecutar.remove(0); //Borro el primer item de la lista de ciclosParaEjecutar
+        this.ciclosParaEjecutar.remove(0);
     }
 
     public int getRafagaActual() {
-        return this.ciclosParaEjecutar.get(0); //Traigo el valor del primer item de la lista
+        return this.ciclosParaEjecutar.get(0);
     }
 
     public void incrementarTiempoEmpleado() {
+
         this.tiempoEmpleado += 1;
     }
 
-    public boolean deboBloquear(){
+    public static int getCantidadDeProcesos() {
+        return cantidadDeProcesos;
+    }
+
+    public boolean deboBloquear() {
         return this.estado == Estado.EJECUCCION && this.tiempoEmpleado >= this.ciclosParaEjecutar.get(0);
     }
 
-    public int getTiempoIngreso() {
-        return tiempoIngreso;
+    public static void setCantidadDeProcesos(int cantidadDeProcesos) {
+        Proceso.cantidadDeProcesos = cantidadDeProcesos;
+    }
+
+    public int getCantidadRafagas() {
+        return cantidadRafagas;
+    }
+
+    public void setCantidadRafagas(int cantidadRafagas) {
+        this.cantidadRafagas = cantidadRafagas;
+    }
+
+    public void reiniciarTiempoEnEjecucion() {
+        this.tiempoEmpleado = 0;
+    }
+
+    public int getTiempoDeLlegada() {
+        return tiempoDeLlegada;
+    }
+
+    public void setTiempoDeLlegada(int tiempoDeLlegada) {
+        this.tiempoDeLlegada = tiempoDeLlegada;
     }
 
     public int getTiempoRequerido() {
         return tiempoRequerido;
     }
 
+    public void setTiempoRequerido(int tiempoRequerido) {
+        this.tiempoRequerido = tiempoRequerido;
+    }
+
+    public int getTiempoEmpleado() {
+        return tiempoEmpleado;
+    }
+
     public int getTiempoBloqueado() {
         return tiempoBloqueado;
+    }
+
+    public void setTiempoBloqueado(int tiempoBloqueado) {
+        this.tiempoBloqueado = tiempoBloqueado;
     }
 
     public Estado getEstado() {
@@ -91,28 +133,60 @@ public class Proceso {
         this.estado = estado;
     }
 
+    public int getCantidadCiclos() {
+        return cantidadRafagas;
+    }
+
+    public void setMomentoDeFinalizacion(int momentoDeFinalizacion) {
+        this.momentoDeFinalizacion = momentoDeFinalizacion;
+    }
+
+    public int getMomentoDeFinalizacion() {
+        return momentoDeFinalizacion;
+    }
+
+    public void setCantidadCiclos(int CantidadCiclos) {
+        this.cantidadRafagas = CantidadCiclos;
+    }
+
     public int getNombreProceso() {
         return nombreProceso;
+    }
+
+    public void setNombreProceso(int nombreProceso) {
+        this.nombreProceso = nombreProceso;
+    }
+
+    public void agregarTiempoProcesamiento(int p) {
+        this.ciclosParaEjecutar.add(p);
     }
 
     public void incrementarTiempo(int p) {
         this.tiempoRequerido += p;
     }
 
-    public Proceso crearAux (){
-        Proceso p = new Proceso(this.cantidadRafagas, this.tiempoIngreso, this.nombreProceso, this.tiempoRequerido, this.tiempoEmpleado, this.tiempoBloqueado, new ArrayList<Integer>(this.ciclosParaEjecutar), Estado.NUEVO);
+    public Proceso crearAux() {
+        Proceso p = new Proceso(this.cantidadRafagas, this.tiempoDeLlegada, this.nombreProceso, this.tiempoRequerido,
+                this.tiempoEmpleado, this.tiempoBloqueado, new ArrayList<Integer>(this.ciclosParaEjecutar),
+                Estado.NUEVO);
         return p;
     }
 
     public void imprimir() {
-        System.out.println("Proceso" + this.nombreProceso);
-        System.out.println("tiempoIngreso" + this.tiempoIngreso);
-        System.out.println("CantidadRafagas" + this.cantidadRafagas);
+        System.out.println("");
+        System.out.println("Proceso: " + this.nombreProceso);
+        System.out.println("Tiempo De Llegada: " + this.tiempoDeLlegada);
+        System.out.println("Cantidad de Rafagas: " + this.cantidadRafagas);
+        for (int i = 0; i < this.ciclosParaEjecutar.size(); i++) {
+            System.out.println("Rafaga: " + (i + 1) + " Valor: " + this.ciclosParaEjecutar.get(i));
+        }
     }
 
     @Override
-    public String toString(){
-        return "{\n" + " nombre:  "  + this.nombreProceso + "\n tiempoBloqueado: " + this.tiempoBloqueado +  "\n rafagas: " + this.ciclosParaEjecutar + "\n tiempoDeEjecucion: " + this.tiempoEmpleado + "\n estado: " + this.estado + "\n}";
+    public String toString() {
+        return "{\n" + " nombre:  " + this.nombreProceso + "\n tiempoBloqueado: " + this.tiempoBloqueado
+                + "\n rafagas: " + this.ciclosParaEjecutar + "\n tiempoDeEjecucion: " + this.tiempoEmpleado
+                + "\n estado: " + this.estado + "\n}";
     }
 
 }

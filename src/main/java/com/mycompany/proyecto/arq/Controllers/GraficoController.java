@@ -8,7 +8,8 @@ public class GraficoController {
     public static void imprimirTabla() {
 
         String posicion;
-        for(int i = 0; i< Tiempo.tiempo; i++) System.out.print("------");
+        for (int i = 0; i < Tiempo.tiempo; i++)
+            System.out.print("------");
         System.out.println();
         for (int i = 0; i < 7; i++) {
 
@@ -44,29 +45,29 @@ public class GraficoController {
             }
             System.out.println();
 
-            for(int setState = 0; setState< Tiempo.tiempo; setState++) System.out.print("------");
-        System.out.println();
+            for (int setState = 0; setState < Tiempo.tiempo; setState++)
+                System.out.print("------");
+            System.out.println();
 
         }
         GraficoController.grafico = new String[7][1000];
     }
 
-    
+    // public static void imprimirTabla2() {
+    // JFrame f;
+    // f = new JFrame();
+    // String[][] data = { {
+    // grafico[1][1] }
+    // };
+    // // String data[][] = grafico;
+    // String[] columnNames = { "Tiempo1" };
 
-    public static void imprimirTabla2() {
-        JFrame f;
-        f = new JFrame();
-        String data[][] = grafico;
-        String column[] = new String[grafico[0].length];
-        for (int i = 0; i < column.length; i++) {
-            column[i] = i + "";
-        }
-        JTable jt = new JTable(data, column);
-        jt.setBounds(50, 50, 400, 400);
-        JScrollPane sp = new JScrollPane(jt);
-        f.add(sp);
-        f.setSize(300, 400);
-        f.setVisible(true);
-    }
+    // JTable jt = new JTable(data, columnNames);
+    // jt.setBounds(50, 50, 400, 400);
+    // JScrollPane sp = new JScrollPane(jt);
+    // f.add(sp);
+    // f.setSize(300, 400);
+    // f.setVisible(true);
+    // }
 
 }

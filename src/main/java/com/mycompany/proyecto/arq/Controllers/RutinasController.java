@@ -11,22 +11,11 @@ public abstract class RutinasController {
     ProcesoController.reiniciarProcesos();
 
     for (Tiempo.tiempo = 0; getProcesosTerminados() <= 2; Tiempo.tiempo++) {
-      // Para evitar desbordamientos
+
       if (Tiempo.tiempo == GraficoController.grafico[0].length)
         break;
-      /*
-       * if(Tiempo.tiempo == 16){
-       * .println(getPrimerProcesoEn(Estado.BLOQUEADO).deboDesbloquear());
-       * .println(getPrimerProcesoEn(Estado.BLOQUEADO).getTiempoBloqueado());
-       * }
-       */
 
       incrementarTiempoBloqueado();
-
-      // Cargamos procesos a nuevo
-
-      // Grabar datos previos en la tabla
-      // GraficoController.grabarEnTabla(); TODO:
 
       String celda = "";
       for (Proceso p : ProcesoController.procesosPorEjecutar) {
@@ -43,8 +32,6 @@ public abstract class RutinasController {
         }
       }
 
-      // Incrementar tiempo en bloqueo
-
       if (esJSFD &&
           hayProcesoEn(Estado.NUEVO) &&
           hayProcesoEnEjecucion() &&
@@ -57,10 +44,9 @@ public abstract class RutinasController {
         continue;
       }
 
-      // Preguntamos si debemos bloquear el proceso en ejecucion
-
       if (hayProcesoEn(Estado.EJECUCCION) && getPrimerProcesoEn(Estado.EJECUCCION).deboTerminar()) {
         GraficoController.grafico[5][Tiempo.tiempo] = "6P" + getPrimerProcesoEn(Estado.EJECUCCION).getNombreProceso();
+        getPrimerProcesoEn(Estado.EJECUCCION).setMomentoDeFinalizacion(Tiempo.tiempo);
         getPrimerProcesoEn(Estado.EJECUCCION).setEstado(Estado.TERMINADO);
         continue;
       }
@@ -70,6 +56,7 @@ public abstract class RutinasController {
         p.reducirRafagaProcesamiento();
         if (p.ciclosParaEjecutar.isEmpty()) {
           GraficoController.grafico[5][Tiempo.tiempo] = "6P" + p.getNombreProceso();
+          getPrimerProcesoEn(Estado.EJECUCCION).setMomentoDeFinalizacion(Tiempo.tiempo);
           p.setEstado(Estado.TERMINADO);
           continue;
         } else if (!p.ciclosParaEjecutar.isEmpty()) {
@@ -83,7 +70,6 @@ public abstract class RutinasController {
 
       }
 
-      // Ejecutar mi proceso si no require ser bloqueado
       if (hayProcesoEnEjecucion()) {
         GraficoController.grafico[getProcesoEnEjecucion().getNombreProceso() +
             1][Tiempo.tiempo] = " X ";
@@ -91,8 +77,7 @@ public abstract class RutinasController {
         continue;
       }
 
-      // Cargar procesos
-      if (hayProcesoEn(Estado.NUEVO) && getPrimerProcesoEn(Estado.NUEVO).getTiempoIngreso() <= Tiempo.tiempo) {
+      if (hayProcesoEn(Estado.NUEVO) && getPrimerProcesoEn(Estado.NUEVO).getTiempoDeLlegada() <= Tiempo.tiempo) {
         GraficoController.grafico[5][Tiempo.tiempo] = "1P" + getPrimerProcesoEn(Estado.NUEVO).getNombreProceso();
         getPrimerProcesoEn(Estado.NUEVO).setEstado(Estado.LISTO);
         continue;
@@ -107,6 +92,7 @@ public abstract class RutinasController {
         GraficoController.grafico[5][Tiempo.tiempo] = "4P" + p.getNombreProceso();
         if (p.ciclosParaEjecutar.isEmpty()) {
           GraficoController.grafico[5][Tiempo.tiempo] = "6P" + p.getNombreProceso();
+          getPrimerProcesoEn(Estado.EJECUCCION).setMomentoDeFinalizacion(Tiempo.tiempo);
           p.setEstado(Estado.TERMINADO);
         }
         p.reiniciarTiempoBloqueado();
@@ -114,7 +100,6 @@ public abstract class RutinasController {
         continue;
       }
 
-      // Mandar procesos de listo a ejecucion
       if (hayProcesoEn(Estado.LISTO) || getPrimerProcesoEn(Estado.LISTO) != null) {
         Proceso proceso = null;
         for (Proceso p : ProcesoController.procesosPorEjecutar) {
@@ -134,6 +119,7 @@ public abstract class RutinasController {
     }
     if (ComparativaController.imprimirGrafica) {
       GraficoController.imprimirTabla();
+      // GraficoController.imprimirTabla2();
     }
 
     if (esJSFD) {
@@ -141,7 +127,8 @@ public abstract class RutinasController {
     } else {
       ComparativaController.tiempoJSF = Tiempo.tiempo;
     }
-
+    ComparativaController.procesosModificados = ProcesoController.procesosPorEjecutar;
+    ComparativaController.procesosOriginales = ProcesoController.procesos;
     Tiempo.tiempo = 0;
     ProcesoController.reiniciarProcesos();
   }

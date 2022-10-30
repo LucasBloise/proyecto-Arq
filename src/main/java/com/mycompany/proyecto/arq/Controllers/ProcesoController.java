@@ -30,7 +30,7 @@ public class ProcesoController {
       System.out.println("Cantidad de Rafagas de procesamiento");
       int CantidadRafagas = sc.nextInt();
       System.out.println("Tiempo de llegada del proceso");
-      int tiempoIngreso = sc.nextInt();
+      int tiempoDeLlegada = sc.nextInt();
 
       ArrayList<Integer> rafagas = new ArrayList<Integer>();
       int tiempoTotal = 0;
@@ -43,22 +43,20 @@ public class ProcesoController {
         tiempoTotal += tiempoRafaga;
       }
 
-      Proceso p = new Proceso(CantidadRafagas, tiempoIngreso, nombreProceso, tiempoTotal, 0, 0, rafagas,
+      Proceso p = new Proceso(CantidadRafagas, tiempoDeLlegada, nombreProceso, tiempoTotal, 0, 0, rafagas,
           Estado.NUEVO);
-
 
       procesos.add(p);
     }
   }
 
-  public static void reiniciarProcesos(){
-    
+  public static void reiniciarProcesos() {
+
     procesosPorEjecutar = new ArrayList<Proceso>();
-    for(Proceso p : procesos){
+    for (Proceso p : procesos) {
       procesosPorEjecutar.add(p.crearAux());
     }
   };
-  
 
   public static void cargaAutomatica() {
 
@@ -70,7 +68,7 @@ public class ProcesoController {
       int nombreProceso = i + 1;
       int CantidadRafagas = 2;
 
-      int tiempoIngreso = 2;
+      int tiempoDeLlegada = 2;
 
       ArrayList<Integer> rafagas = new ArrayList<Integer>();
       int tiempoTotal = 0;
@@ -82,10 +80,9 @@ public class ProcesoController {
         tiempoTotal += tiempoRafaga;
       }
 
-      Proceso p = new Proceso(CantidadRafagas, tiempoIngreso, nombreProceso, tiempoTotal, 0, 0, rafagas,
+      Proceso p = new Proceso(CantidadRafagas, tiempoDeLlegada, nombreProceso, tiempoTotal, 0, 0, rafagas,
           Estado.NUEVO);
 
-            
       procesos.add(p);
     }
   }
