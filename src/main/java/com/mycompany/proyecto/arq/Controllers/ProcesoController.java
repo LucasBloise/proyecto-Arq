@@ -7,8 +7,8 @@ package com.mycompany.proyecto.arq.Controllers;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.mycompany.proyecto.arq.Estado;
-import com.mycompany.proyecto.arq.Proceso;
+import com.mycompany.proyecto.arq.Data.Estado;
+import com.mycompany.proyecto.arq.Data.Proceso;
 
 /**
  *

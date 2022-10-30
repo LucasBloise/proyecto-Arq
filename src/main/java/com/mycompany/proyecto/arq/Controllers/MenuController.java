@@ -1,10 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.proyecto.arq.Controllers;
 
 import java.util.Scanner;
+
+import com.mycompany.proyecto.arq.Data.InfoGlobal;
 
 /**
  *
@@ -62,7 +60,6 @@ public class MenuController {
                 break;
 
             case "4":
-                // jejecutar jsf d
                 if (!ProcesoController.procesos.isEmpty()) {
                     RutinasController.ejecutarProcesos(true);
                     System.out.print("Presiones cualquier tecla para continuar");

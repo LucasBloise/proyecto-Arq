@@ -2,7 +2,8 @@ package com.mycompany.proyecto.arq.Controllers;
 
 import java.util.ArrayList;
 
-import com.mycompany.proyecto.arq.Proceso;
+import com.mycompany.proyecto.arq.Data.Proceso;
+import com.mycompany.proyecto.arq.Data.Tiempo;
 
 public class ComparativaController {
     public static boolean imprimirGrafica = true;

@@ -2,6 +2,8 @@ package com.mycompany.proyecto.arq.Controllers;
 
 import javax.swing.*;
 
+import com.mycompany.proyecto.arq.Data.Tiempo;
+
 public class GraficoController {
     public static String[][] grafico = new String[7][1000];
 
@@ -52,22 +54,4 @@ public class GraficoController {
         }
         GraficoController.grafico = new String[7][1000];
     }
-
-    // public static void imprimirTabla2() {
-    // JFrame f;
-    // f = new JFrame();
-    // String[][] data = { {
-    // grafico[1][1] }
-    // };
-    // // String data[][] = grafico;
-    // String[] columnNames = { "Tiempo1" };
-
-    // JTable jt = new JTable(data, columnNames);
-    // jt.setBounds(50, 50, 400, 400);
-    // JScrollPane sp = new JScrollPane(jt);
-    // f.add(sp);
-    // f.setSize(300, 400);
-    // f.setVisible(true);
-    // }
-
 }
