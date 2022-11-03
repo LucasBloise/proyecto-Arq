@@ -47,6 +47,7 @@ public class MenuController {
                 // ejecutar jsf
                 System.out.print("\033[H\033[2J");
                 if (!ProcesoController.procesos.isEmpty()) {
+                    ComparativaController.imprimirGrafica = true;
                     RutinasController.ejecutarProcesos(false);
                     System.out.print("Presiones cualquier tecla para continuar");
                     sc.nextLine();
@@ -61,6 +62,7 @@ public class MenuController {
 
             case "4":
                 if (!ProcesoController.procesos.isEmpty()) {
+                    ComparativaController.imprimirGrafica = true;
                     RutinasController.ejecutarProcesos(true);
                     System.out.print("Presiones cualquier tecla para continuar");
                     sc.nextLine();
